@@ -1,6 +1,6 @@
 {
   "name" : "Select Same Symbols",
-  "description" : "Select same symbols as the selected symbol",
+  "description" : "Select same symbols as the currently selected symbol",
   "author" : "Yusuke Saitoh",
   "version" : "1.0.0",
   "identifier" : "com.yusukesaitoh.sketch-select-same-symbols",
