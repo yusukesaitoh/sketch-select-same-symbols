@@ -1,4 +1,5 @@
 var selectedCount = 0;
+var selectedPage;
 
 var selectSymbols = function(obj, selectedSymbolID)
 {
@@ -38,7 +39,6 @@ var selectSymbols = function(obj, selectedSymbolID)
 }
 
 var selectSameSymbols = function(context) {
-
 	if(context.selection.count() == 0) {
 		[[NSApplication sharedApplication] displayDialog:"Please select a symbol." withTitle:"No symbol selected"];
 		return;
@@ -65,14 +65,19 @@ var selectSameSymbols = function(context) {
     selectedSymbolName = selectedLayer.symbolMaster().name();
   }
 
-  var pages = context.document.pages();
+  var doc = context.document;
+  var pages = doc.pages();
   for (var i = 0; i < pages.count(); i++) {
     var page = pages[i];
     selectSymbols(page, selectedSymbolID);
+    if(selectedPage == undefined && selectedCount > 0) {
+      selectedPage = page;
+    }
   }
   if(selectedCount == 0) {
     [[NSApplication sharedApplication] displayDialog:"This symbol is not used.\n("+selectedSymbolName+")" withTitle:"Symbol not used"];
   } else {
+    [doc setCurrentPage:selectedPage]
     [[NSApplication sharedApplication] displayDialog:selectedCount+" symbols are selected.\n("+selectedSymbolName+")" withTitle:"Symbol selected"];
   }
 }
