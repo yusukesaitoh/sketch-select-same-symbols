@@ -1,0 +1,21 @@
+{
+  "name" : "Select Same Symbols",
+  "description" : "Select same symbols as the selected symbol",
+  "author" : "Yusuke Saitoh",
+  "version" : "1.0.0",
+  "identifier" : "com.yusukesaitoh.sketch-select-same-symbols",
+  "homepage": "https://github.com/yusukesaitoh/sketch-select-same-symbols",
+  "commands" : [
+    {
+      "script" : "script.cocoascript",
+      "handler" : "selectSameSymbols",
+      "shortcut" : "shift ctrl s",
+      "name" : "Select Same Symbols",
+      "identifier" : "selectSameSymbols"
+    }
+  ],
+  "menu": {
+    "items": ["selectSameSymbols"],
+    "isRoot": true
+  }
+}

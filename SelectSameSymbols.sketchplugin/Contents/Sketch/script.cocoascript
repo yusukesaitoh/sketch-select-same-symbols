@@ -1,0 +1,78 @@
+var selectedCount = 0;
+
+var selectSymbols = function(obj, selectedSymbolID)
+{
+  if([obj class] == MSSliceLayer) {
+    [obj select:false byExpandingSelection:true];
+    return;
+  }
+
+  if (obj.class() == MSPage || obj.class() == MSLayerGroup || obj.class() == MSArtboardGroup) {
+    [obj select:false byExpandingSelection:true];
+    for(var i = 0; i < obj.layers().count(); i++) {
+      layer = obj.layers()[i];
+      selectSymbols(layer, selectedSymbolID);
+    }
+  }
+
+  if (obj.class() == MSSymbolMaster) {
+    if(obj.symbolID() == selectedSymbolID) {
+      [obj select:true byExpandingSelection:true];
+    } else {
+      [obj select:false byExpandingSelection:true];
+    }
+    for(var i = 0; i < obj.layers().count(); i++) {
+      layer = obj.layers()[i];
+      selectSymbols(layer, selectedSymbolID);
+    }
+	}
+
+  if (obj.class() == MSSymbolInstance) {
+    if(obj.symbolMaster().symbolID() == selectedSymbolID) {
+      [obj select:true byExpandingSelection:true];
+      selectedCount++;
+    } else {
+      [obj select:false byExpandingSelection:true];
+    }
+  }
+}
+
+var selectSameSymbols = function(context) {
+
+	if(context.selection.count() == 0) {
+		[[NSApplication sharedApplication] displayDialog:"Please select a symbol." withTitle:"No symbol selected"];
+		return;
+	}
+
+	if(context.selection.count() > 1) {
+		[[NSApplication sharedApplication] displayDialog:"This plugin doesn't work with multiple symbols." withTitle:"Multiple symbols selected"];
+		return;
+	}
+
+	var selectedLayer = context.selection[0];
+	if (selectedLayer.class() != MSSymbolMaster && selectedLayer.class() != MSSymbolInstance) {
+		[[NSApplication sharedApplication] displayDialog:"Please select a symbol." withTitle:"Non-symbol selected"];
+		return;
+	}
+
+  var selectedSymbolID;
+  var selectedSymbolName;
+  if(selectedLayer.class() == MSSymbolMaster) {
+    selectedSymbolID = selectedLayer.symbolID();
+    selectedSymbolName = selectedLayer.name();
+  } else if(selectedLayer.class() == MSSymbolInstance) {
+    selectedSymbolID = selectedLayer.symbolMaster().symbolID();
+    selectedSymbolName = selectedLayer.symbolMaster().name();
+  }
+
+  var pages = context.document.pages();
+  for (var i = 0; i < pages.count(); i++) {
+    var page = pages[i];
+    selectSymbols(page, selectedSymbolID);
+  }
+  if(selectedCount == 0) {
+    [[NSApplication sharedApplication] displayDialog:"This symbol is not used.\n("+selectedSymbolName+")" withTitle:"Symbol not used"];
+  } else {
+    [[NSApplication sharedApplication] displayDialog:selectedCount+" symbols are selected.\n("+selectedSymbolName+")" withTitle:"Symbol selected"];
+  }
+}
