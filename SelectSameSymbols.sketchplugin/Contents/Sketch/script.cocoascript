@@ -58,7 +58,7 @@ var validate = function(context) {
   return true;
 }
 
-var selectSameSymbolsInAllPages = function(context) {
+var selectSameSymbolsOnAllPages = function(context) {
 
   if(!validate(context)) return;
 
@@ -85,11 +85,11 @@ var selectSameSymbolsInAllPages = function(context) {
     [[NSApplication sharedApplication] displayDialog:"This symbol is not used.\n("+selectedSymbolName+")" withTitle:"Symbol not used"];
   } else {
     [doc setCurrentPage:selectedPage]
-    [[NSApplication sharedApplication] displayDialog:selectedCount+" symbols are selected.\n("+selectedSymbolName+")" withTitle:"Symbol selected"];
+    [[NSApplication sharedApplication] displayDialog:selectedCount+" symbols are selected.\n("+selectedSymbolName+")" withTitle:"Symbols selected"];
   }
 }
 
-var selectSameSymbolsInCurrentPage = function(context) {
+var selectSameSymbolsOnCurrentPage = function(context) {
 
   if(!validate(context)) return;
 

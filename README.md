@@ -10,5 +10,5 @@ This is a Sketch plugin that selects same symbols as the currently selected symb
 
 ## Usage
 
-- <kbd>shift</kbd> + <kbd>ctrl</kbd> + <kbd>s</kbd> - Select Same Symbols In The Current Page
-- <kbd>shift</kbd> + <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>s</kbd> - Select Same Symbols In All Pages
+- <kbd>shift</kbd> + <kbd>ctrl</kbd> + <kbd>s</kbd> - Select Same Symbols On The Current Page
+- <kbd>shift</kbd> + <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>s</kbd> - Select Same Symbols On All Pages
